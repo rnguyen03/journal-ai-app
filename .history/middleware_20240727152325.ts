@@ -5,7 +5,7 @@ import apiMiddleware from 'middleware/api'
 import authMiddleware from 'middleware/auth'
 import editMiddleware from 'middleware/edit'
 import logoutMiddleware from 'middleware/logout'
-
+import handler from './app/api/users/route'
 
 function matchPathname(url, pathname) {
   return url.pathname.startsWith(pathname)
@@ -28,7 +28,7 @@ export async function middleware(req: NextRequest) {
   if (matchPathname(url, '/auth')) {
     return authMiddleware(req)
   }*/
-
+ 
 
   return NextResponse.next()
 }
