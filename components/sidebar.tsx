@@ -30,13 +30,13 @@ export default function Sidebar({
           <section className="sidebar-header">
             <img
               className="logo"
-              src="/logo.svg"
+              src="/Mindmate.png"
               width="22px"
               height="20px"
               alt=""
               role="presentation"
             />
-            <strong>React Notes</strong>
+            <strong>Mind Mate</strong>
           </section>
         </Link>
         <section className="sidebar-menu" role="menubar">
