@@ -1,6 +1,6 @@
 'use server'
 
-import { kv } from '@vercel/kv'
+// import { kv } from '@vercel/kv'
 import { getUser, userCookieKey } from 'libs/session'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
@@ -27,7 +27,7 @@ export async function saveNote(
     created_by: user
   }
 
-  await kv.hset('notes', { [noteId]: JSON.stringify(payload) })
+  // await kv.hset('notes', { [noteId]: JSON.stringify(payload) })
 
   revalidatePath('/')
   redirect(`/note/${noteId}`)

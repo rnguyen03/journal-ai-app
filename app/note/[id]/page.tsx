@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv'
+// import { kv } from '@vercel/kv'
 import NoteUI from 'components/note-ui'
 
 export const metadata = {
@@ -8,7 +8,7 @@ export const metadata = {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const note = await kv.hget('notes', params.id)
+  const note = null
 
   if (note === null) {
     return (
