@@ -93,7 +93,7 @@ export default async function middleware(req: NextRequest) {
   const res = NextResponse.redirect(url);
 
   res.cookies.set(
-    'dummy_user', 
+    'dummy_user', // Change cookie key to avoid conflicts
     `${user.name}${user.encrypted}; Secure; HttpOnly`
   )
 

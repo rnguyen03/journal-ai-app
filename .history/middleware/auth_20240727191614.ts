@@ -94,7 +94,12 @@ export default async function middleware(req: NextRequest) {
 
   res.cookies.set(
     'dummy_user', 
-    `${user.name}${user.encrypted}; Secure; HttpOnly`
+    `${user.name}${user.encrypted}`,
+    {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+    }
   )
 
   return res

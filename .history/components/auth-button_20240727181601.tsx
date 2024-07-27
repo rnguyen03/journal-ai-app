@@ -14,8 +14,7 @@ export default function AuthButton({
   const user = getUser(userCookie?.value)
   const isDraft = noteId == null
 
-
-  if (user==null) {
+  if (user) {
     return (
       // Use hard link
       <a href={`/note/edit/${noteId || ''}`} className="link--unstyled">

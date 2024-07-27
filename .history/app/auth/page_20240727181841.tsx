@@ -1,20 +1,18 @@
-
-import './style.css'
-import Image from "../public/Mindmate.png";
+import '../style.css'
 
 import React from 'react'
 // import { kv } from '@vercel/kv'
 import Sidebar from 'components/sidebar'
 import AuthButton from 'components/auth-button'
-
+import ParentComponent from 'components/login'
 export const metadata = {
-  title: 'Mind Mate',
-  description: 'Mind Mate',
+  title: 'Next.js App Router + React Server Components Demo',
+  description: 'Demo of React Server Components in Next.js. Hosted on Vercel.',
   openGraph: {
-    title: 'Mind Mate',
+    title: 'Next.js App Router + React Server Components Demo',
     description:
-      'Mind Mate',
-    images: [{Image}]
+      'Demo of React Server Components in Next.js. Hosted on Vercel.',
+    images: ['https://next-rsc-notes.vercel.app/og.png']
   },
   robots: {
     index: true,
@@ -47,14 +45,15 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <div className="container">
-          {/* <div className="banner">
+          <div className="banner">
             <a
               href="https://nextjs.org/docs/app/building-your-application/rendering/server-components"
               target="_blank"
             >
               Learn more →
             </a>
-          </div> */}
+          </div>
+          <ParentComponent />
           <div className="main">
             <Sidebar notes={notesArray}>
               <AuthButton noteId={null}>Add</AuthButton>

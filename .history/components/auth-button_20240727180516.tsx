@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { getUser, userCookieKey } from 'libs/session'
-
+import ParentComponent from '../app/login'
 export default function AuthButton({
   children,
   noteId
@@ -14,8 +14,7 @@ export default function AuthButton({
   const user = getUser(userCookie?.value)
   const isDraft = noteId == null
 
-
-  if (user==null) {
+  if (user) {
     return (
       // Use hard link
       <a href={`/note/edit/${noteId || ''}`} className="link--unstyled">
@@ -35,7 +34,7 @@ export default function AuthButton({
 
   return (
     <Link href="/auth" className="link--unstyled">
-
+      <ParentComponent/>
       <button
         className={[
           'edit-button',
