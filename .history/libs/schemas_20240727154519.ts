@@ -19,10 +19,7 @@ const userSchema = {
     userName: { type: 'string' },
     email: { type: 'string'},
     password: { type: 'string'}, 
-    notes: {
-      type:'array',
-      items: noteSchema
-    }
+    notes: [noteSchema]
   },
   required: ['userName', 'email', 'password'],
   additionalProperties: false
