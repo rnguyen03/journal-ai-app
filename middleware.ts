@@ -12,22 +12,22 @@ function matchPathname(url, pathname) {
 }
 
 export async function middleware(req: NextRequest) {
-  /*const url = req.nextUrl.clone()
-  if (matchPathname(url, '/api')) {
-    return handler(req)
-  }
+  const url = req.nextUrl.clone()
+  // if (matchPathname(url, '/api')) {
+  //   return handler(req)
+  // }
 
-  if (matchPathname(url, '/edit')) {
-    return editMiddleware(req)
-  }
+  // if (matchPathname(url, '/edit')) {
+  //   return editMiddleware(req)
+  // }
 
-  if (matchPathname(url, '/logout')) {
-    return logoutMiddleware(req)
-  }
+  // if (matchPathname(url, '/logout')) {
+  //   return logoutMiddleware(req)
+  // }
 
   if (matchPathname(url, '/auth')) {
     return authMiddleware(req)
-  }*/
+  }
 
 
   return NextResponse.next()
