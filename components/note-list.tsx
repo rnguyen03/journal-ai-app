@@ -23,7 +23,7 @@ export default function NoteList({ notes, searchText }) {
         note &&
         (!searchText ||
           note.title.toLowerCase().includes(searchText.toLowerCase())) ? (
-          <li key={note.id}>
+          <li key={note.Note_ID}>
             <SidebarNote note={note} />
           </li>
         ) : null
@@ -49,7 +49,7 @@ function excerpts(html, length) {
 }
 
 function SidebarNote({ note }) {
-  const updatedAt = new Date(note.updated_at)
+  const updatedAt = new Date(note.date)
   const lastUpdatedAt = isToday(updatedAt)
     ? format(updatedAt, 'h:mm bb')
     : format(updatedAt, 'M/d/yy')

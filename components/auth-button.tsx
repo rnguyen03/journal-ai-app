@@ -1,6 +1,9 @@
+"use client";
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { getUser, userCookieKey } from 'libs/session'
+import { useEffect, useState } from 'react';
+
 
 export default function AuthButton({
   children,
@@ -9,10 +12,20 @@ export default function AuthButton({
   children: React.ReactNode
   noteId: string | null
 }) {
-  const cookieStore = cookies()
-  const userCookie = cookieStore.get(userCookieKey)
-  const user = getUser(userCookie?.value)
-  const isDraft = noteId == null
+  const [user, setUser] = useState(null);
+
+  const isDraft = noteId == null;
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const handleLogin = () => {
+    window.location.href = '/auth';
+  };
 
   if (user) {
     return (
@@ -26,28 +39,21 @@ export default function AuthButton({
           role="menuitem"
         >
           {children}
-          <img
-            src={`https://avatars.githubusercontent.com/${user}?s=40`}
-            alt="User Avatar"
-            title={user}
-            className="avatar"
-          />
         </button>
       </a>
     )
   }
 
   return (
-    <Link href="/auth" className="link--unstyled">
       <button
         className={[
           'edit-button',
           isDraft ? 'edit-button--solid' : 'edit-button--outline'
         ].join(' ')}
         role="menuitem"
+        onClick={handleLogin}
       >
         Login to Add
       </button>
-    </Link>
   )
 }

@@ -20,7 +20,7 @@ export default async function EditPage({ params }: { params: { id: string } }) {
   const user = getUser(userCookie?.value)
 
   const note = null
-  const isCreator = true // note?.created_by === user || 
+  const isCreator = true // note?.created_by === user ||
 
   if (note === null) {
     return (

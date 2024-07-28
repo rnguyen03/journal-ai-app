@@ -1,26 +1,28 @@
 'use client'
 
-import React, { Suspense } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import SearchField from 'components/search'
 import NoteList from 'components/note-list'
 import NoteListSkeleton from 'components/note-list-skeleton'
 
+
+
 type Note = {
-  id: string
-  created_by: string
+  Note_ID: string
   title: string
   body: string
-  updated_at: number
+  summary: string
+  date: number
 }
 
 export default function Sidebar({
   children,
-  notes
+  initialNotes
 }: {
   children: React.ReactNode
-  notes: Note[]
+  initialNotes: Note[]
 }) {
   return (
     <>
@@ -44,20 +46,20 @@ export default function Sidebar({
           {children}
         </section>
         <nav>
-          <Notes notes={notes} />
+          <Notes initialNotes={initialNotes} />
         </nav>
       </section>
     </>
   )
 }
 
-function Notes({ notes }: { notes: Note[] }) {
+function Notes({ initialNotes }: { initialNotes: Note[] }) {
   const searchParams = useSearchParams()
   const search = searchParams.get('q')
 
   return (
     <Suspense fallback={<NoteListSkeleton />}>
-      <NoteList notes={notes} searchText={search} />
+      <NoteList notes={initialNotes} searchText={search} />
     </Suspense>
   )
 }
