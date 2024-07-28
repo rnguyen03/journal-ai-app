@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   webpack: (config) => {
@@ -13,10 +13,10 @@ module.exports = {
         path.resolve(__dirname, 'node_modules/aws4'),
         path.resolve(__dirname, 'node_modules/gcp-metadata'),
         path.resolve(__dirname, 'node_modules/@mongodb-js/zstd'),
-        path.resolve(__dirname, 'node_modules/mongodb-client-encryption'),
-      ],
-    });
+        path.resolve(__dirname, 'node_modules/mongodb-client-encryption')
+      ]
+    })
 
-    return config;
-  },
-};
+    return config
+  }
+}

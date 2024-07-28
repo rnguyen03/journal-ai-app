@@ -13,7 +13,7 @@ function matchPathname(url, pathname) {
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone()
   if (matchPathname(url, '/api')) {
-    return apiMiddleware(req);
+    return apiMiddleware(req)
   }
 
   /*if (matchPathname(url, '/edit')) {

@@ -13,7 +13,7 @@ export default function AuthButton({
   const userCookie = cookieStore.get(userCookieKey)
   const user = getUser(userCookie?.value)
   const isDraft = noteId == null
-  console.log("user", user);
+  console.log('user', user)
 
   if (user) {
     return (
@@ -27,7 +27,6 @@ export default function AuthButton({
           role="menuitem"
         >
           {children}
-          
         </button>
       </a>
     )
@@ -35,7 +34,6 @@ export default function AuthButton({
 
   return (
     <Link href="/auth" className="link--unstyled">
-
       <button
         className={[
           'edit-button',

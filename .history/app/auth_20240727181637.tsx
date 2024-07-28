@@ -53,7 +53,7 @@ export default async function RootLayout({
               Learn more →
             </a>
           </div>
-          
+
           <div className="main">
             <Sidebar notes={notesArray}>
               <AuthButton noteId={null}>Add</AuthButton>

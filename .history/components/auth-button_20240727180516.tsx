@@ -26,7 +26,6 @@ export default function AuthButton({
           role="menuitem"
         >
           {children}
-          
         </button>
       </a>
     )
@@ -34,7 +33,7 @@ export default function AuthButton({
 
   return (
     <Link href="/auth" className="link--unstyled">
-      <ParentComponent/>
+      <ParentComponent />
       <button
         className={[
           'edit-button',

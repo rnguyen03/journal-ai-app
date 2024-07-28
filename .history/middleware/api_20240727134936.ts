@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getUser, userCookieKey } from 'libs/session'
-import { GET, POST } from '../app/api/users';
+import { GET, POST } from '../app/api/users'
 export default function middleware(req: NextRequest) {
   /*const userCookie = req.cookies.get(userCookieKey)?.value
   const user = getUser(userCookie)

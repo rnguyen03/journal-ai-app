@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { getUser, userCookieKey } from 'libs/session'
@@ -27,7 +27,6 @@ export default function AuthButton({
           role="menuitem"
         >
           {children}
-          
         </button>
       </a>
     )
@@ -35,7 +34,7 @@ export default function AuthButton({
 
   return (
     <Link href="/auth" className="link--unstyled">
-      <ParentComponent/>
+      <ParentComponent />
       <button
         className={[
           'edit-button',

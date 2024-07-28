@@ -1,6 +1,6 @@
-import Ajv from 'ajv';
+import Ajv from 'ajv'
 
-const ajv = new Ajv({ allErrors: true });
+const ajv = new Ajv({ allErrors: true })
 
 const userSchema = {
   type: 'object',
@@ -11,8 +11,8 @@ const userSchema = {
   },
   required: ['userName', 'email'],
   additionalProperties: false
-};
+}
 
-const validateUser = ajv.compile(userSchema);
+const validateUser = ajv.compile(userSchema)
 
-export { validateUser };
+export { validateUser }

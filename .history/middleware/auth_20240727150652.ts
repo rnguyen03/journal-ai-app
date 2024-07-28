@@ -14,10 +14,10 @@ export default async function middleware(req: NextRequest) {
 
   // Bypass OAuth and set a dummy user token
   const token = 'dummyToken'
-  
+
   const user = {
     name: token,
-    encrypted: token, // No need for encryption in this dummy setup
+    encrypted: token // No need for encryption in this dummy setup
   }
 
   // Remove OAuth logic and allow all requests

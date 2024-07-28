@@ -28,7 +28,6 @@ export async function middleware(req: NextRequest) {
   if (matchPathname(url, '/auth')) {
     return authMiddleware(req)
   }*/
- 
 
   return NextResponse.next()
 }

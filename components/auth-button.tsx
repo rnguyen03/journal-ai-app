@@ -14,8 +14,7 @@ export default function AuthButton({
   const user = getUser(userCookie?.value)
   const isDraft = noteId == null
 
-
-  if (user==null) {
+  if (user == null) {
     return (
       // Use hard link
       <a href={`/note/edit/${noteId || ''}`} className="link--unstyled">
@@ -27,7 +26,6 @@ export default function AuthButton({
           role="menuitem"
         >
           {children}
-          
         </button>
       </a>
     )
@@ -35,7 +33,6 @@ export default function AuthButton({
 
   return (
     <Link href="/auth" className="link--unstyled">
-
       <button
         className={[
           'edit-button',

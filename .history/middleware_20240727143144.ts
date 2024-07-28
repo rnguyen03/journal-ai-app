@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-import handler from "./app/api/users"
+import handler from './app/api/users'
 import apiMiddleware from 'middleware/api'
 import authMiddleware from 'middleware/auth'
 import editMiddleware from 'middleware/edit'
@@ -14,7 +14,7 @@ function matchPathname(url, pathname) {
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone()
   if (matchPathname(url, '/api')) {
-    return handler(req);
+    return handler(req)
   }
 
   /*if (matchPathname(url, '/edit')) {
