@@ -6,7 +6,7 @@ import cheerio from 'cheerio'
 import marked from 'marked'
 import ClientSidebarNote from './sidebar-note'
 
-export default async function NoteList({ notes, searchText }) {
+export default function NoteList({ notes, searchText }) {
   if (notes.length === 0) {
     return (
       <div className="notes-empty">
