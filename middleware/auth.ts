@@ -12,17 +12,27 @@ export default async function middleware(req: NextRequest) {
   const encrypt = createEncrypt()
   const { code } = query
 
-  let token = ''
+  console.log('Middleware invoked')
+  console.log('Next URL:', nextUrl)
+  console.log('Search Params:', searchParams)
+  console.log('Query:', query)
+  console.log('Code:', code)
+  console.log('Client ID:', CLIENT_ID)
+  console.log('Client Secret:', CLIENT_SECRET)
 
-  // Remove OAuth logic and allow all requests
-  // Comment out or remove the following block
-
+  // When there's no `code` param specified,
+  // it's a GET from the client side.
+  // We go with the login flow.
   if (!code) {
+    console.log('No code found, initiating GitHub login flow')
     const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&allow_signup=false`
+    console.log('Redirecting to:', redirectUrl)
     return NextResponse.redirect(redirectUrl)
   }
 
+  let token = ''
   try {
+    console.log('Fetching access token from GitHub')
     const data = await (
       await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
@@ -38,9 +48,12 @@ export default async function middleware(req: NextRequest) {
       })
     ).json()
 
+    console.log('Access token response:', data)
     const accessToken = data.access_token
 
+    // Let's also fetch the user info and store it in the session.
     if (accessToken) {
+      console.log('Fetching user info from GitHub')
       const userInfo = await (
         await fetch('https://api.github.com/user', {
           method: 'GET',
@@ -51,14 +64,11 @@ export default async function middleware(req: NextRequest) {
         })
       ).json()
 
-      console.log('Github authorization successful')
-
+      console.log('User info response:', userInfo)
       token = userInfo.login
     }
   } catch (err) {
-    console.error(err)
-
-    console.log('Github authorization failed')
+    console.error('Error during GitHub OAuth process:', err)
 
     return NextResponse.json(
       { message: err.toString() },
@@ -69,7 +79,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (!token) {
-    console.log('Github authorization failed')
+    console.log('No token found, GitHub authorization failed')
     return NextResponse.json(
       { message: 'Github authorization failed' },
       {
@@ -78,22 +88,24 @@ export default async function middleware(req: NextRequest) {
     )
   }
 
+  console.log('User token obtained:', token)
   const user = {
     name: token,
     encrypted: await encrypt(token)
   }
 
-  // Allow the request to proceed without OAuth checks
   const url = req.nextUrl.clone()
   url.searchParams.delete('code')
   url.pathname = '/'
 
-  const res = NextResponse.next()
+  const res = NextResponse.redirect(url)
 
+  console.log('Setting user cookie')
   res.cookies.set(
-    'dummy_user', // Change cookie key to avoid conflicts
-    `${user.name}${user.encrypted}; Secure; HttpOnly`
+    userCookieKey,
+    `${user.name}${cookieSep}${user.encrypted}; Secure; HttpOnly`
   )
 
+  console.log('Redirecting to home page')
   return res
 }

@@ -17,9 +17,9 @@ export async function middleware(req: NextRequest) {
   //   return handler(req)
   // }
 
-  // if (matchPathname(url, '/edit')) {
-  //   return editMiddleware(req)
-  // }
+  if (matchPathname(url, '/edit')) {
+    return editMiddleware(req)
+  }
 
   // if (matchPathname(url, '/logout')) {
   //   return logoutMiddleware(req)
