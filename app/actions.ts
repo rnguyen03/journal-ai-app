@@ -6,6 +6,8 @@ import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
+const crypto = require('crypto');
+
 export async function saveNote(
   noteId: string | null,
   title: string,
@@ -13,6 +15,9 @@ export async function saveNote(
 ) {
   const user ={
     userName: "Pooja"
+  }
+  if(!noteId){
+    noteId = crypto.randomBytes(8).toString('hex');
   }
   const note = {
     Note_ID: noteId,
@@ -23,6 +28,7 @@ export async function saveNote(
 
   }
   try{
+    console.log("the note id is", noteId);
     const resp = await fetch('http://localhost:3000/api/notes', {
       method: 'POST',
       headers: {

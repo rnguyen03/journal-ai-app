@@ -23,11 +23,11 @@ export const metadata = {
 }
 
 type Note = {
-  id: string
-  created_by: string
+  Note_ID: string
   title: string
   body: string
-  updated_at: number
+  summary: string
+  date: number
 }
 
 export default async function RootLayout({
@@ -39,7 +39,7 @@ export default async function RootLayout({
   
   let notesArray: Note[] = notes
     ? (Object.values(notes) as Note[]).sort(
-        (a, b) => Number(a.id) - Number(b.id)
+        (a, b) => Number(a.Note_ID) - Number(b.Note_ID)
       )
     : []
 

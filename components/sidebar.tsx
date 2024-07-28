@@ -10,11 +10,11 @@ import NoteListSkeleton from 'components/note-list-skeleton'
 
 
 type Note = {
-  id: string
-  created_by: string
+  Note_ID: string
   title: string
   body: string
-  updated_at: number
+  summary: string
+  date: number
 }
 
 export default function Sidebar({

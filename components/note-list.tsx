@@ -23,7 +23,7 @@ export default function NoteList({ notes, searchText }) {
         note &&
         (!searchText ||
           note.title.toLowerCase().includes(searchText.toLowerCase())) ? (
-          <li key={note.id}>
+          <li key={note.Note_ID}>
             <SidebarNote note={note} />
           </li>
         ) : null
