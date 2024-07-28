@@ -16,7 +16,6 @@ const noteSchema = {
 const userSchema = {
   type: 'object',
   properties: {
-    userName: { type: 'string' },
     email: { type: 'string' },
     password: { type: 'string' },
     notes: {
@@ -24,7 +23,7 @@ const userSchema = {
       items: noteSchema
     }
   },
-  required: ['userName', 'email', 'password'],
+  required: ['email', 'password'],
   additionalProperties: false
 }
 

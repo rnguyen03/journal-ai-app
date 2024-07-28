@@ -1,6 +1,9 @@
+"use client";
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { getUser, userCookieKey } from 'libs/session'
+import { useEffect, useState } from 'react';
+
 
 export default function AuthButton({
   children,
@@ -9,12 +12,22 @@ export default function AuthButton({
   children: React.ReactNode
   noteId: string | null
 }) {
-  const cookieStore = cookies()
-  const userCookie = cookieStore.get(userCookieKey)
-  const user = getUser(userCookie?.value)
-  const isDraft = noteId == null
+  const [user, setUser] = useState(null);
 
-  if (user == null) {
+  const isDraft = noteId == null;
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const handleLogin = () => {
+    window.location.href = '/auth';
+  };
+
+  if (user) {
     return (
       // Use hard link
       <a href={`/note/edit/${noteId || ''}`} className="link--unstyled">
@@ -32,16 +45,15 @@ export default function AuthButton({
   }
 
   return (
-    <Link href="/auth" className="link--unstyled">
       <button
         className={[
           'edit-button',
           isDraft ? 'edit-button--solid' : 'edit-button--outline'
         ].join(' ')}
         role="menuitem"
+        onClick={handleLogin}
       >
         Login to Add
       </button>
-    </Link>
   )
 }

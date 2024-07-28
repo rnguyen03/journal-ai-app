@@ -23,12 +23,37 @@ const ParentComponent = () => {
         const result = await resp.json()
 
         console.log(result)
+        localStorage.setItem('user', JSON.stringify(result.email))
         router.push('/')
       } else {
         alert('Invalid credentials')
       }
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  const handleRegister = async () => {
+    try {
+      const resp = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      })
+      const result = await resp.json()
+      console.log('Response:', resp)
+      console.log('Result:', result)
+      if (resp.ok) {
+        console.log(result)
+        localStorage.setItem('user', JSON.stringify(result.email))
+        router.push('/')
+      } else {
+        alert(`Registration failed: ${JSON.stringify(result)}`)
+      }
+    } catch (error) {
+      console.error('Error during registration:', error)
     }
   }
 
@@ -41,8 +66,9 @@ const ParentComponent = () => {
         password={password}
         setPassword={setPassword}
         handleLogin={handleLogin}
+        handleRegister={handleRegister}
       />
-      <p>Your passwords: {password}</p>
+      <p>Your password: {password}</p>
     </div>
   )
 }
@@ -61,7 +87,7 @@ const EmailInput = ({ email, setEmail }) => {
   )
 }
 
-const PasswordInput = ({ password, setPassword, handleLogin }) => {
+const PasswordInput = ({ password, setPassword, handleLogin, handleRegister }) => {
   return (
     <div className="input-group">
       <input
@@ -72,7 +98,10 @@ const PasswordInput = ({ password, setPassword, handleLogin }) => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button className="btn btn-primary" onClick={handleLogin}>
-        Submit
+        Login
+      </button>
+      <button className="btn btn-primary" onClick={handleRegister}>
+        Register
       </button>
     </div>
   )

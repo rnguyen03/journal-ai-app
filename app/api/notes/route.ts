@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const { user, note } = await req.json()
 
     try {
-      const result = await users.findOne({ userName: user.userName })
+      const result = await users.findOne({ email: user.email })
 
       if (result === null) {
         return NextResponse.json({ error: 'User not found' })
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       console.log(result.notes)
 
       await users.updateOne(
-        { userName: user.userName },
+        { email: user.email },
         { $set: { notes: result.notes } }
       )
 
@@ -58,13 +58,13 @@ export async function GET(req: NextRequest) {
     await db.connect();
     const users = db.getCollection('users');
     const { searchParams } = new URL(req.url);
-    const userName = searchParams.get('userName');
+    const email = searchParams.get('email');
     
-    if (!userName) {
-      return NextResponse.json({ error: 'Missing username query parameter' }, { status: 400 });
+    if (!email) {
+      return NextResponse.json({ error: 'Missing email query parameter' }, { status: 400 });
     }
 
-    const result = await users.findOne({ userName });
+    const result = await users.findOne({ email });
     if (result === null) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -73,4 +73,40 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error('Error fetching user notes:', error);
   }
+}
+
+export async function DELETE(req: NextRequest){
+  const uri = process.env.URI;
+  if (!uri) {
+    return NextResponse.json({error: "Missing Mongo URI in .env.local"})
+    }
+    try {
+      const db = MongoDB.getInstance(uri);
+      await db.connect();
+      const users = db.getCollection('users');
+      
+      const { email, noteId } = await req.json();
+
+      if (!email) {
+        return NextResponse.json({ error: 'Missing email query parameter' }, { status: 400
+          });
+          }
+          const result = await users.findOne({ email:email });
+          if (result === null) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+            }
+          const notes = result.notes;
+          for (let i = 0; i < notes.length; ++i) {
+            const note = notes[i];
+            if(note.Note_ID === noteId){
+              notes.splice(i,1);
+            }
+        }
+        await users.updateOne({ email:email }, { $set: { notes } });
+        return NextResponse.json({ message: 'Note deleted successfully' });
+        } catch (error) {
+          console.error('Error deleting note:', error);
+          }
+          
+
 }

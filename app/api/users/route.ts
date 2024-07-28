@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { MongoDB } from '../../../libs/mongodb'
 import { validateUser } from '../../../libs/schemas'
-
+import bcrypt from 'bcrypt'
 export async function GET(req: NextRequest) {
   const uri = process.env.URI
 
@@ -49,13 +49,16 @@ export async function POST(req: NextRequest) {
     await db.connect()
     const users = db.getCollection('users')
 
-    const body = await req.json()
-    const valid = validateUser(body)
+    const { email, password } = await req.json()
+    
+    const valid = validateUser({ email, password })
     if (!valid) {
       return NextResponse.json({ error: validateUser.errors }, { status: 400 })
     }
 
-    const newUser = body
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const newUser = { email, password: hashedPassword }
+
     try {
       const result = await users.insertOne(newUser)
       return NextResponse.json(newUser, { status: 201 })
@@ -73,3 +76,4 @@ export async function POST(req: NextRequest) {
     )
   }
 }
+
